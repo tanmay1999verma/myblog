@@ -1,0 +1,90 @@
+<div class="header">
+  <div class="logo">
+    <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a>
+  </div>
+  <h1 class="usermanagement">User Management</h1>
+  <div class="profile1">
+    <%= image_tag("Rectangle 14.png") %>
+  </div>
+  <div class="name1">
+    <%= current_user.first_name %>
+    <%= current_user.last_name %>
+    <div class="role">
+     <%= current_user.roles.pluck("name")[0] %>
+    </div>
+  </div>
+</div>
+<div class="managementbody">
+  <div class="sidebar">
+    <div class="icon1">
+      <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+      <a href="http://localhost:3000/">Feed</a>
+    </div>
+    <div class="icon2">
+      <%= image_tag("Vector (11).png") %>
+      <%= link_to "Profile", user_profile_path %>
+    </div>
+    <div class="icon3">
+      <%= image_tag("1034785-200.png") %>
+      <%= link_to "Manage User", user_index_path %>
+    </div>
+    <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+    <div class="icon5">
+      <%= image_tag("Vector (12).png") %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+    </div>
+  </div>
+  <div class="container">
+    <div class="title4">
+      <h2>List of Users</h2>
+      <div class="button3">
+        <button><%= link_to "Create User", new_user_path %></button>
+      </div>
+
+    </div>
+    <% @users.each do |users| %>
+      <% if users.id!= 1 %>
+        <div class="usericon1">
+          <div class="logo1">
+            <%=image_tag("maze_logo.svg") %>
+          </div>
+          <% if users.access_locked? %>
+            <div class="dot1">
+              <h2>.</h2>
+            </div>
+          <% else %>
+            <div class="dot2">
+              <h2>.</h2>
+            </div>
+          <% end %>
+          <div class="name2">
+            <%= users.first_name %>
+            <%= users.last_name %>
+          </div>
+          <div class="phone">
+            <%= users.phone_number %>
+          </div>
+          <div class="email">
+            <%= users.email %>
+          </div>
+          <% if users.access_locked? %>
+            <div class="button4">
+              <button> <%= link_to 'Activate', deactivate_path(users), method: :get %></button>
+              <%#= flash[:alert] = " ID Sucessfully Activated" %>
+            </div>
+          <% else %>
+            <div class="button5">
+              <button><%= link_to 'Deactivate', deactivate_path(users), method: :get %></button>
+              <%#= flash[:alert] = " ID Sucessfully Deactivated" %>
+            </div>
+          <% end %>
+              <%#= users.roles.pluck("name")[0] %>
+          <h3 class="dots">...</h3>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,220 @@
+<div class="header">
+  <div class="logo">
+<a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a> </div>
+
+  <div class="search">
+    <label>
+      <input type="text" placeholder="Search">
+    </label>
+    <div class="profile">
+      <%= image_tag("Rectangle 14.png") %>
+    </div>
+    <div class="name">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <% if current_user.has_role? :admin %>
+        <div class="role">
+          <%= current_user.roles.pluck("name")[0] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<%if current_user.has_role? :admin %>
+  <div class="bbody">
+    <div class="sidebar">
+    <div class="icon1">
+      <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+      <a href="http://localhost:3000/">Feed</a>
+    </div>
+    <div class="icon2">
+      <%= image_tag("Vector (11).png") %>
+      <%= link_to "Profile", user_profile_path %>
+      </div>
+    <div class="icon3">
+      <%= image_tag("1034785-200.png") %>
+      <%= link_to "Manage User", user_index_path %>
+    </div>
+      <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+    <div class="icon5">
+      <%= image_tag("Vector (12).png") %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+    </div>
+  </div>
+    <div class="body2">
+      <div>
+      <%= render "form", article: @article %>
+    </div>
+      <% @articles.each do |article| %>
+        <div class="list">
+          <div class="titlebox">
+            <a href="http://localhost:3000/"><%= image_tag("maze_logo.svg") %></a>
+            <div class="title3">
+            <h2><%= article.title %></h2>
+<!--            <h2><%#= link_to article.title, article %></h2>-->
+
+            <div class="dropdown1">
+            <%@article1 = article %>
+            <span>...</span>
+            <div class="dropdown1-content">
+              <div class="edit"><%= link_to "Edit", edit_article_path(@article1) %></div>
+              <div class="delete"><%= link_to "Destroy", article_path(@article1), data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          } %>
+              </div>
+            </div>
+
+          </div>
+            </div>
+            <div class="status1">
+              <%= time_ago_in_words(article.created_at) %>  .
+              <%= article.status %>
+            </div>
+          </div>
+
+          <div class="text">
+            <%= link_to article.body, article %>
+          </div>
+          <div class="counter">
+              <%= article.likes.count %> likes.
+              <%= article.comments.length %> comments
+          </div>
+          <hr>
+          <div class="post1">
+            <% like = current_user.likes.find_by(article_id: article.id) %>
+            <% if like.present? %>
+              <div class="unlike_button" >
+                <%= button_to "","/articles/#{article.id}/likes/#{like.id}", method: :delete %>
+                <p class="p"> UnLike</p>
+              </div>
+            <% else %>
+              <div class="like_button">
+                <%= button_to "", "/articles/#{article.id}/likes", method: :post %>
+                <p class="p"> Like</p>
+              </div>
+            <% end %>
+            <p class="p">
+            <%=image_tag("Vector (9).png") %>
+            <%= link_to "Comments", article_url(article.id) %></p>
+          </div>
+          <hr>
+          <% @blog= article %>
+          <%= render 'comments/form' %>
+          <div class="ctitle">
+            <% if article.comments.first&.commenter.present? %>
+              <%= image_tag("maze_logo.svg") %>
+              <h3><%= article.comments.order('created_at DESC').first&.commenter %></h3>
+            <%end %>
+          </div>
+          <div class="text4">
+            <%= article.comments.order('created_at DESC').first&.body %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="sidebody2">
+      <div class="userlist">
+        <h3>User List</h3>
+        <% @user.each do |users| %>
+            <% if users.articles.present? %>
+              <div class="usericon">
+              <%=image_tag("maze_logo.svg") %>
+                <div class="user1">
+              <%= users.first_name %>
+              <%= users.last_name %>
+                </div>
+              </div>
+            <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="bbody">
+    <div class="sidebar">
+        <div class="icon1">
+          <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+          <a href="http://localhost:3000/">Feed</a>
+        </div>
+        <div class="icon2">
+          <%= image_tag("Vector (11).png") %>
+          <%= link_to "Profile", user_profile_path %>
+        </div>
+        <div class="icon5">
+          <%= image_tag("Vector (12).png") %>
+          <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+        </div>
+      </div>
+    <div class="body">
+      <div>
+        <%= render "form", article: @article %>
+      </div>
+      <% @articles.each do |article| %>
+          <div class="list">
+            <div class="title5">
+              <a href="http://localhost:3000/"><%= image_tag("maze_logo.svg") %></a>
+              <h2><%= article.title %></h2>
+<!--             <h2><%#= link_to article.title, article %></h2>-->
+              <div class="dropdown">
+                <%@article1 = article %>
+                <span>...</span>
+                <div class="dropdown-content">
+                  <div class="edit"><%= link_to "Edit", edit_article_path(@article1) %></div>
+                  <div class="delete"><%= link_to "Destroy", article_path(@article1), data: {
+                                turbo_method: :delete,
+                                turbo_confirm: "Are you sure?"
+                              } %>
+                  </div>
+                </div>
+              </div>
+              <div class="status3">
+                <%= time_ago_in_words(article.created_at) %>  .
+                <%= article.status %>
+            </div>
+            </div>
+            <div class="text">
+              <%= link_to article.body, article %>
+            </div>
+            <div class="counter">
+              <%= article.likes.count %> likes.
+              <%= article.comments.length %> comments
+            </div>
+            <hr>
+            <div class="post1">
+              <% like = current_user.likes.find_by(article_id: article.id) %>
+              <% if like.present? %>
+                <div class="unlike_button" >
+                  <%= button_to "","/articles/#{article.id}/likes/#{like.id}", method: :delete %>
+                  <p class="p"> UnLike</p>
+                </div>
+              <% else %>
+                <div class="like_button">
+                  <%= button_to "", "/articles/#{article.id}/likes", method: :post %>
+                  <p class="p"> Like</p>
+                </div>
+              <% end %>
+               <p class="p">
+              <%=image_tag("Vector (9).png") %>
+              Comment</p>
+            </div>
+            <hr>
+            <% @blog= article %>
+            <%= render 'comments/form' %>
+            <div class="ctitle">
+              <% if article.comments.first&.commenter.present? %>
+                <%= image_tag("maze_logo.svg") %>
+                <h3><%= article.comments.order('created_at DESC').first&.commenter %></h3>
+              <%end %>
+            </div>
+            <div class="text4">
+              <%= article.comments.order('created_at DESC').first&.body %>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<% if current_user.has_role? :admin %>
+  <%= form_with model: [ @blog, @blog.comments.build ] do |form| %>
+    <p class="title1">
+<!--    <%#= form.label :commenter %><br>-->
+     <%= form.text_field :commenter , value: current_user.first_name, type: :hidden, placeholder: "Title"%>
+    </p>
+    <div class="comment">
+      <p class="body3">
+<!--    <%#= form.label :body %><br>-->
+        <%= form.text_area :body ,placeholder:"Write a comment"%>
+      </p>
+      <p class="button1">
+        <%= form.submit ""%>
+      </p>
+    </div>
+<!--<p class="status">-->
+<!--  <%#= form.label :status %><br>-->
+  <%#= form.select :status, ['public', 'private'], selected: 'public' %>
+<!--</p>-->
+  <% end %>
+<% else %>
+  <%= form_with model: [ @blog, @blog.comments.build ] do |form| %>
+    <p class="title1">
+<!--    <%#= form.label :commenter %><br>-->
+      <%= form.text_field :commenter , value: current_user.first_name, type: :hidden, placeholder: "Title"%>
+    </p>
+    <div class="comment">
+      <p class="body1">
+<!--    <%#= form.label :body %><br>-->
+        <%= form.text_area :body ,placeholder:"Write a comment"%>
+      </p>
+      <p class="button1">
+        <%= form.submit ""%>
+      </p>
+    </div>
+<!--<p class="status">-->
+<!--  <%#= form.label :status %><br>-->
+  <%#= form.select :status, ['public', 'private'], selected: 'public' %>
+<!--</p>-->
+  <% end %>
+<% end %>

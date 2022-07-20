@@ -1,0 +1,2 @@
+class AddField < ApplicationRecord
+end

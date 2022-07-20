@@ -1,0 +1,28 @@
+<div class="box">
+  <div class="header1">
+   <%= image_tag("maze_logo.svg") %>
+   <h1 style="color: white">Maze</h1>
+  </div>
+  <hr>
+  <div class="box1">
+    <div class="text3">
+  <h2 style="color: white">Forgot your password?</h2>
+  </div>
+
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+  <%= render "devise/shared/error_messages", resource: resource %>
+
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  </div>
+
+  <div class="actions2">
+    <%= f.submit "Send me reset password instructions" %>
+  </div>
+<% end %>
+<div class="links">
+  <%= render "devise/shared/links" %>
+</div>
+  </div>
+</div>

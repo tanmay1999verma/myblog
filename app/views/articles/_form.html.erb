@@ -1,0 +1,71 @@
+<% if current_user.has_role? :admin %>
+  <div class="form">
+    <%= form_with model: article do |form| %>
+      <div class="title">
+<!--        <%#= form.label :title %><br>-->
+        <%= form.text_field :title , value:current_user.first_name ,type: :hidden,placeholder: "Title"%>
+        <% article.errors.full_messages_for(:title).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+      <div class="post">
+      <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %></a>
+<!--        <%#= form.label :body %><br>-->
+        <%= form.text_area :body ,placeholder: "Write something here"%><br>
+        <% article.errors.full_messages_for(:body).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+       </div>
+      <div class="status">
+        <%= form.label :status %><br>
+        <%= form.select :status, ['public', 'private'], selected: 'public' %>
+      </div>
+      <div class="submit">
+        <div class="image"><%=image_tag("Vector (4).png") %></div>
+        <p> Live Video</p>
+        <div class="image"><%=image_tag("Vector (5).png") %></div>
+        <p> Photo/Video</p>
+        <div class="image"><%=image_tag("Vector (6).png") %></div>
+        <p> Feeling</p>
+        <div class="button2">
+          <%= form.submit "POST"%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="form">
+    <%= form_with model: article do |form| %>
+      <div class="title">
+  <!--      <%#= form.label :title %><br>-->
+        <%= form.text_field :title , value:current_user.first_name ,type: :hidden,placeholder: "Title"%>
+        <% article.errors.full_messages_for(:title).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+      <div class="post">
+      <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %></a>
+<!--        <%#= form.label :body %><br>-->
+        <%= form.text_area :body ,placeholder: "Write something here"%><br>
+        <% article.errors.full_messages_for(:body).each do |message| %>
+          <div><%= message %></div>
+        <% end %>
+      </div>
+      <div class="status">
+        <%= form.label :status %><br>
+        <%= form.select :status, ['public', 'private'], selected: 'public' %>
+      </div>
+      <div class="submit">
+        <div class="image"><%=image_tag("Vector (4).png") %></div>
+        <p> Live Video</p>
+        <div class="image"><%=image_tag("Vector (5).png") %></div>
+        <p> Photo/Video</p>
+        <div class="image"><%=image_tag("Vector (6).png") %></div>
+        <p> Feeling</p>
+        <div class="button">
+          <%= form.submit "POST"%>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

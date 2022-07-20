@@ -1,0 +1,15 @@
+<h1>Pages#home</h1>
+
+<%if current_user %>
+
+    <%= link_to 'Post', articles_path %>
+    <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+
+<%else %>
+
+  <%= link_to 'sign_up', new_user_registration_path %>
+
+  <%= link_to 'sign_in', new_user_session_path %>
+
+<%end %>
+

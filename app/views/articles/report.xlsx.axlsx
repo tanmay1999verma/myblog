@@ -1,0 +1,13 @@
+wb = xlsx_package.workbook
+
+ wb.styles do |style|
+  highlight_cell = style.add_style(bg_color: "EFC376")
+wb.add_worksheet(name: "User") do |sheet|
+   sheet.add_row %w(Name Post Comment Like )
+
+     @article.each do |article|
+      sheet.add_row [article.title,article.body,article.comments.length,article.likes.length ]
+
+end
+  end
+end

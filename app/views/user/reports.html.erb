@@ -1,0 +1,198 @@
+<div class="header">
+  <div class="logo">
+<a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a> </div>
+
+  <div class="search">
+    <label>
+      <input type="text" placeholder="Search">
+    </label>
+    <div class="profile">
+      <%= image_tag("Rectangle 14.png") %>
+    </div>
+    <div class="name">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <% if current_user.has_role? :admin %>
+        <div class="role">
+          <%= current_user.roles.pluck("name")[0] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+  <div class="bbody">
+    <div class="sidebar">
+    <div class="icon1">
+      <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+      <a href="http://localhost:3000/">Feed</a>
+    </div>
+    <div class="icon2">
+      <%= image_tag("Vector (11).png") %>
+      <%= link_to "Profile", user_profile_path %>
+    </div>
+    <div class="icon3">
+      <%= image_tag("1034785-200.png") %>
+      <%= link_to "Manage User", user_index_path %>
+    </div>
+      <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+    <div class="icon5">
+      <%= image_tag("Vector (12).png") %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+    </div>
+  </div>
+<div class="body5">
+  <div class="box4">
+    <div class="circle">
+      <%= image_tag("Vector (17).png") %>
+    </div>
+<h3 class="title6">All Users</h3>
+<p class="text8">Posts,comments and likes count</p>
+<form>
+  <div class="radio">
+    <div>
+  <input type="radio" id="all_user_excel" class="all_user_excel" >
+  <label for="all_user_excel">Excel</label><br>
+       </div>
+      <div>
+  <input type="radio" id="all_user_csv" class="all_user_csv" >
+  <label for="all_user_csv">CSV</label><br>
+    </div>
+
+  </div>
+  <div class="submit2">
+  <input type="submit" class="all_user_btn" value="Download" onclick="downloadFile()">
+  </div>
+</form>
+
+<script>
+    let report_csv = document.getElementById('all_user_csv');
+    let report_xls = document.getElementById('all_user_excel');
+
+    let button = document.getElementById('all_user_btn');
+
+    button.onclick = downloadFile;
+
+    function downloadFile()
+    {
+        if(report_csv.checked)
+        {
+            window.open('/user_report.csv');
+            location.reload();
+        }
+        else if(report_xls.checked)
+        {
+            window.open("/user_report.xlsx");
+            location.reload();
+        }
+        else
+        {
+            alert("Please check one of the options first.");
+            location.reload();
+        }
+    }
+</script>
+  </div>
+<div class="box4">
+  <div class="circle">
+    <%= image_tag("Vector (17).png") %>
+  </div>
+<h3>All Users</h3>
+<p>Having more than 10 post users</p>
+<form>
+  <div class="radio">
+    <div>
+  <input type="radio" id="sorted_user_excel" class="sorted_user_excel" >
+  <label for="sorted_user_excel">Excel</label><br>
+    </div>
+    <div>
+  <input type="radio" id="sorted_user_csv" class="sorted_user_csv" >
+  <label for="sorted_user_csv">CSV</label><br>
+    </div>
+  </div>
+  <div class="submit2">
+  <input type="submit" class="sorted_user_btn" value="Download" onclick="sorted_downloadFile()">
+  </div>
+</form>
+
+<script>
+    let sorted_csv = document.getElementById('sorted_user_csv');
+    let sorted_xls = document.getElementById('sorted_user_excel');
+    let sorted_button = document.getElementById('sorted_user_btn');
+
+    sorted_button.onclick = sorted_downloadFile;
+
+    function sorted_downloadFile()
+    {
+        if(sorted_csv.checked)
+        {
+            window.open("sorted_user_report.csv");
+             location.reload();
+        }
+        else if(sorted_xls.checked)
+        {
+            window.open("sorted_user_report.xlsx");
+             location.reload();
+        }
+        else
+        {
+            alert("Please check one of the options first.");
+             location.reload();
+        }
+    }
+</script>
+</div>
+  <div class="box5">
+    <div class="circle">
+      <%= image_tag("Vector (17).png") %>
+    </div>
+<h3>Postwise Report</h3>
+<p>Title/Description,comments,likes</p>
+<form>
+  <div class="radio">
+    <div>
+  <input type="radio" id="postwise_user_excel" class="postwise_user_excel" >
+  <label for="postwise_user_excel">Excel</label><br>
+    </div>
+    <div>
+  <input type="radio" id="postwise_user_csv" class="postwise_user_csv" >
+  <label for="postwise_user_csv">CSV</label><br>
+    </div>
+  </div>
+  <div class="submit2">
+  <input type="submit" class="sorted_user_btn" value="Download" onclick="postwise_downloadFile()">
+  </div>
+</form>
+
+<script>
+    let postwise_csv = document.getElementById('postwise_user_csv');
+    let postwise_xls = document.getElementById('postwise_user_excel');
+
+    let postwise_button = document.getElementById('postwise_user_btn');
+
+    postwise_button.onclick = postwise_downloadFile;
+
+    function postwise_downloadFile()
+    {
+        if(postwise_csv.checked)
+        {
+            window.open("article_report.csv");
+            location.reload();
+        }
+        else if(postwise_xls.checked)
+        {
+            window.open("/article_report.xlsx");
+            location.reload();
+        }
+        else
+        {
+            alert("Please check one of the options first.");
+            location.reload();
+        }
+    }
+</script>
+  </div>
+</div>
+  </div>

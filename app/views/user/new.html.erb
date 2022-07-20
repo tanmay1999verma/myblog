@@ -1,0 +1,111 @@
+<div class="header">
+  <div class="logo">
+    <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a>
+  </div>
+  <h1 class="usermanagement">User Management</h1>
+  <div class="profile1">
+    <%= image_tag("Rectangle 14.png") %>
+  </div>
+  <div class="name1">
+    <%= current_user.first_name %>
+    <%= current_user.last_name %>
+    <div class="role">
+      <%= current_user.roles.pluck("name")[0] %>
+    </div>
+  </div>
+</div>
+<div class="managementbody">
+  <div class="sidebar">
+    <div class="icon1">
+      <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+      <a href="http://localhost:3000/">Feed</a>
+    </div>
+    <div class="icon2">
+      <%= image_tag("Vector (11).png") %>
+      <%= link_to "Profile", user_profile_path %>
+    </div>
+    <div class="icon3">
+      <%= image_tag("1034785-200.png") %>
+      <%= link_to "Manage User", user_index_path %>
+    </div>
+    <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+    <div class="icon5">
+      <%= image_tag("Vector (12).png") %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+    </div>
+  </div>
+<div class="form2">
+  <h2 class="text6">Add User</h2>
+<%= form_with  url: '/user', method: :POST   do |f| %>
+ <div class="fields">
+  <div class="field2">
+<!--    <%#= f.label :first_name %><br />-->
+    <br />
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", placeholder: "First Name", :maxlength => 35 %>
+    <%# if @users.errors.include?(:first_name) %>
+<!--      <div class="invalid-feedback d-block">-->
+          <%# @users.errors.full_messages_for(:first_name).each do |error_message| %>
+<!--          <%#= error_message %>.-->
+          <%# end %>
+<!--      </div>-->
+    <%# end %>
+  </div>
+  <div class="field2">
+<!--    <%#= f.label :last_name %><br />-->
+    <br />
+    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name", placeholder: "Last Name", :maxlength => 35 %>
+  </div>
+ </div>
+ <div class="fields">
+  <div class="field2">
+<!--    <%#= f.label :phone_number %><br />-->
+    <br />
+    <%= f.phone_field :phone_number, autofocus: true, autocomplete: "phone_number", placeholder: "Phone No.", :maxlength => 10 %>
+  </div>
+
+  <div class="field2">
+<!--    <%#= f.label :email %>-->
+    <br />
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
+  </div>
+ </div>
+ <div class="fields">
+  <div class="field2">
+    <%#= f.label :password %>
+    <% if @minimum_password_length %>
+    <em>(<%= @minimum_password_length %> characters minimum)</em>
+    <% end %><br />
+    <%= f.password_field :password, autocomplete: "password", placeholder: "Password" %>
+  </div>
+
+  <div class="field2">
+<!--    <%#= f.label :password_confirmation %>-->
+    <br />
+    <%= f.password_field :password_confirmation, autocomplete: "password_confirmation", placeholder: "Confirm Password" %>
+  </div>
+ </div>
+    <h3 class="text7"> Assign Role</h3>
+    <div class="gap">
+      <div class="button6">
+        <%= f.label :user %>
+        <%= f.radio_button :roles, "user" , type: :radio %>
+      </div>
+      <div class="button6">
+        <%= f.label :user1 %>
+        <%= f.radio_button :roles, "user1" , type: :radio %>
+      </div>
+      <div class="button6">
+        <%= f.label :user2 %>
+        <%= f.radio_button :roles, "user2" , type: :radio %>
+      </div>
+    </div>
+
+  <div class="button7">
+    <%= f.submit  "Create user" %>
+  </div>
+<% end %>
+</div>
+</div>

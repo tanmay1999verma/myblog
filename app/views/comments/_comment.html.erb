@@ -1,0 +1,24 @@
+<%# unless comment.private? %>
+  <div>
+      <h4 class="text2">
+        <% if comment.body.present? %>
+          <%=image_tag("maze_logo.svg") %>
+        <%end %>
+        <%= comment.commenter %>
+      </h4>
+
+    <p class="text1">
+        <%= comment.body %>
+    </p>
+    <%if comment.commenter.present?%>
+      <p class="image1">
+        <%= image_tag("Vector (8).png") %>
+        <%= link_to "Delete", [comment.article, comment], data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  } %>
+      </p>
+      <hr class="line">
+    <% end %>
+  </div>
+<%# end %>

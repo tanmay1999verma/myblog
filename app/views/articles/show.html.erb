@@ -1,0 +1,210 @@
+<div class="header">
+  <div class="logo">
+    <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %><h1>Maze</h1></a>  </div>
+  <div class="search">
+    <label>
+      <input type="text" placeholder="Search">
+    </label>
+    <div class="profile">
+      <%= image_tag("Rectangle 14.png") %>
+    </div>
+    <div class="name">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <div class="role">
+        <%if current_user.has_role? :admin %>
+          <%= current_user.roles.pluck(:name)[0] %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<%if current_user.has_role? :admin %>
+    <div class="bbody">
+    <div class="sidebar">
+      <div class="icon1">
+        <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+        <a href="http://localhost:3000/">Feed</a>
+      </div>
+      <div class="icon2">
+        <%= image_tag("Vector (11).png") %>
+        <%= link_to "Profile", user_profile_path %>
+      </div>
+      <div class="icon3">
+        <%= image_tag("1034785-200.png") %>
+        <%= link_to "Manage User", user_index_path %>
+     </div>
+      <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+      <div class="icon5">
+        <%=image_tag("Vector (12).png") %>
+        <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+      </div>
+    </div>
+    <div class="body">
+      <div class="form">
+        <div class="showtitle">
+          <a href="http://localhost:3000/"><%= image_tag("maze_logo.svg") %></a>
+          <h2><%= @article.title %></h2>
+          <div class="dropdown">
+            <span>...</span>
+            <div class="dropdown-content">
+              <div class="edit"><%= link_to "Edit", edit_article_path(@article) %></div>
+              <div class="delete"><%= link_to "Destroy", article_path(@article), data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          } %>
+              </div>
+            </div>
+          </div>
+          <div class="status2">
+            <%= time_ago_in_words(@article.created_at) %>  .
+            <%= @article.status %>
+          </div>
+        </div>
+        <p class="text"><%= @article.body %></p>
+
+        <div class="counter">
+          <%= @article.likes.count %> likes.
+          <%= @article.comments.count %> comments
+        </div>
+        <hr>
+        <div class="post1">
+          <% like = current_user.likes.find_by(article_id: @article.id) %>
+          <% if like.present? %>
+            <div class="unlike_button" >
+              <%= button_to "","/articles/#{@article.id}/likes/#{like.id}", method: :delete %>
+              <p class="p"> UnLike</p>
+            </div>
+          <% else %>
+            <div class="like_button">
+              <%= button_to "", "/articles/#{@article.id}/likes", method: :post %>
+              <p class="p"> Like</p>
+            </div>
+          <% end %>
+          <p class="p">
+          <%=image_tag("Vector (9).png") %>
+          Comment</p>
+        </div>
+        <hr>
+        <%#= render 'comments/form' %>
+        <%= form_with model: [ @blog, @blog.comments.build ] do |form| %>
+      <p class="title1">
+  <!--    <%#= form.label :commenter %><br>-->
+       <%= form.text_field :commenter , value: current_user.first_name, type: :hidden, placeholder: "Title"%>
+      </p>
+      <div class="comment">
+        <p class="body4">
+  <!--    <%#= form.label :body %><br>-->
+          <%= form.text_area :body ,placeholder:"Write a comment"%>
+        </p>
+        <p class="button1">
+          <%= form.submit ""%>
+        </p>
+      </div>
+  <!--<p class="status">-->
+  <!--  <%#= form.label :status %><br>-->
+    <%#= form.select :status, ['public', 'private'], selected: 'public' %>
+  <!--</p>-->
+    <% end %>
+        <div class="comments">
+          <h3>Comments</h3>
+          <hr class="line">
+          <%= render @article.comments.reverse %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% else %>
+  <div class="bbody">
+    <div class="sidebar">
+      <div class="icon1">
+        <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+        <a href="http://localhost:3000/">Feed</a>
+      </div>
+      <div class="icon2">
+        <%= image_tag("Vector (11).png") %>
+        <%= link_to "Profile", user_profile_path %>
+      </div>
+      <div class="icon5">
+        <%=image_tag("Vector (12).png") %>
+        <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+      </div>
+    </div>
+    <div class="body">
+      <div class="form">
+        <div class="showtitle">
+          <a href="http://localhost:3000/"><%= image_tag("maze_logo.svg") %></a>
+          <h2><%= @article.title %></h2>
+          <div class="dropdown">
+            <span>...</span>
+            <div class="dropdown-content">
+              <div class="edit"><%= link_to "Edit", edit_article_path(@article) %></div>
+              <div class="delete"><%= link_to "Destroy", article_path(@article), data: {
+                            turbo_method: :delete,
+                            turbo_confirm: "Are you sure?"
+                          } %>
+              </div>
+            </div>
+          </div>
+          <div class="status2">
+            <%= time_ago_in_words(@article.created_at) %>  .
+            <%= @article.status %>
+          </div>
+        </div>
+        <p class="text"><%= @article.body %></p>
+
+        <div class="counter">
+          <%= @article.likes.count %> likes.
+          <%= @article.comments.count %> comments
+        </div>
+        <hr>
+        <div class="post1">
+          <% like = current_user.likes.find_by(article_id: @article.id) %>
+          <% if like.present? %>
+            <div class="unlike_button" >
+              <%= button_to "","/articles/#{@article.id}/likes/#{like.id}", method: :delete %>
+              <p class="p"> UnLike</p>
+            </div>
+          <% else %>
+            <div class="like_button">
+              <%= button_to "", "/articles/#{@article.id}/likes", method: :post %>
+              <p class="p"> Like</p>
+            </div>
+          <% end %>
+          <p class="p">
+          <%=image_tag("Vector (9).png") %>
+          Comment</p>
+        </div>
+        <hr>
+        <%#= render 'comments/form' %>
+        <%= form_with model: [ @blog, @blog.comments.build ] do |form| %>
+      <p class="title1">
+  <!--    <%#= form.label :commenter %><br>-->
+       <%= form.text_field :commenter , value: current_user.first_name, type: :hidden, placeholder: "Title"%>
+      </p>
+      <div class="comment">
+        <p class="body4">
+  <!--    <%#= form.label :body %><br>-->
+          <%= form.text_area :body ,placeholder:"Write a comment"%>
+        </p>
+        <p class="button1">
+          <%= form.submit ""%>
+        </p>
+      </div>
+  <!--<p class="status">-->
+  <!--  <%#= form.label :status %><br>-->
+    <%#= form.select :status, ['public', 'private'], selected: 'public' %>
+  <!--</p>-->
+    <% end %>
+        <div class="comments">
+          <h3>Comments</h3>
+          <hr class="line">
+          <%= render @article.comments.reverse %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

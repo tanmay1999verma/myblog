@@ -1,0 +1,79 @@
+<div class="header">
+  <div class="logo">
+<a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a> </div>
+
+  <div class="search">
+    <label>
+      <input type="text" placeholder="Search">
+    </label>
+    <div class="profile">
+      <%= image_tag("Rectangle 14.png") %>
+    </div>
+    <div class="name">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <% if current_user.has_role? :admin %>
+        <div class="role">
+          <%= current_user.roles.pluck("name")[0] %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+<% if current_user.has_role? :admin %>
+  <div class="bbody">
+    <div class="sidebar">
+      <div class="icon1">
+        <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+        <a href="http://localhost:3000/">Feed</a>
+      </div>
+      <div class="icon2">
+        <%= image_tag("Vector (11).png") %>
+        <%= link_to "Profile", user_profile_path %>
+      </div>
+      <div class="icon3">
+        <%= image_tag("1034785-200.png") %>
+        <%= link_to "Manage User", user_index_path %>
+      </div>
+        <div class="icon4">
+        <%= image_tag("download (1).png") %>
+        <%= link_to "Report", user_reports_path %>
+      </div>
+      <div class="icon5">
+        <%= image_tag("Vector (12).png") %>
+        <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+      </div>
+    </div>
+    <div class="body6">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <%= current_user.phone_number %>
+      <%= current_user.email %>
+      <%= current_user.roles.pluck("name")[0] %>
+    </div>
+  </div>
+<% else %>
+<div class="bbody">
+    <div class="sidebar">
+        <div class="icons">
+          <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+          <a href="http://localhost:3000/">Feed</a>
+        </div>
+        <div class="icons">
+          <%= image_tag("Vector (11).png") %>
+          <%= link_to "Profile", user_profile_path %>
+        </div>
+        <div class="icons">
+          <%= image_tag("Vector (12).png") %>
+          <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+        </div>
+      </div>
+  <div class="body6">
+      <%= current_user.first_name %>
+      <%= current_user.last_name %>
+      <%= current_user.phone_number %>
+      <%= current_user.email %>
+      <%= current_user.roles.pluck("name")[0] %>
+    </div>
+</div>
+  <% end %>
