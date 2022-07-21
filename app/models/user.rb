@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_many :articles,dependent: :destroy
   has_many :comments,dependent: :destroy
   validates :first_name, presence: true, length: {maximum: 35}
+  # validates_presence_of :first_name, :message => 'Please enter First Name'
   validates :last_name, presence: true, length: {maximum: 35}
   validates :phone_number, presence: true, uniqueness: true,
             format: {with: /\A[5-9][0-9]{9}\z/}
@@ -44,4 +45,12 @@ class User < ApplicationRecord
       end
     end
   end
+
+  # def self.import(file, user_id)
+  #   CSV.foreach(file.path, headers: true) do |row|
+  #     User.create!{
+  #       first_name: row[0]
+  #     }
+  #   end
+  # end
 end

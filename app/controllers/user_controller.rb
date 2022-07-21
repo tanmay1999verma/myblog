@@ -13,7 +13,7 @@ class UserController < ApplicationController
        @users.add_role params[:roles]
      @users.save
        if @users.save!
-         UserNotifierMailer.send_signup_email(@users).deliver
+         UserNotifierMailer.send_signup_email.deliver_now
          redirect_to user_index_path
          flash[:alert] = "This User was saved successfully"
        else
@@ -49,6 +49,16 @@ class UserController < ApplicationController
        format.csv { send_data @users.to_csv2 }
        format.xlsx
      end
+  end
+
+  def import
+    @users = User.all
+    if params[:file].present?
+      Sample.import(params[:file], params[:user_id])
+      redirect_to root_url, notice: "Users Imported"
+    else
+      redirect_to root_url, notice: "You need to choose a file first!"
+    end
   end
 
   def profile

@@ -15,10 +15,21 @@
 
   <body>
   <% flash.each do |type, msg| %>
-  <div class="alert" >
-    <%= msg %>
-  </div>
-<% end %>
+    <div class="alert" id="alert" >
+      <%= msg %>
+    </div>
+  <% end %>
+<!--  {-->
+<!--  <a class="close" data-dismiss="alert">&#215;</a>-->
+  <%#= content_tag :div, msg, :id => "flash_#{alert}" %>
+<!--}-->
+
+<!--   <script>-->
+<!--      setTimeout("$('.alert').fadeOut('slow')", 6000)-->
+<!--         // setTimeout(function () {-->
+<!--         //     $('.alert').fadeOut();-->
+<!--         // }, 3000);-->
+<!--   </script>-->
 <!--       <p class="notice"><%#= notice %></p>-->
 <!--       <p class="alert"><%#= alert %></p>-->
     <%= yield %>

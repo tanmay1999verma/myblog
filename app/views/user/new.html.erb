@@ -40,18 +40,14 @@
 <div class="form2">
   <h2 class="text6">Add User</h2>
 <%= form_with  url: '/user', method: :POST   do |f| %>
+    <%# @users.errors.full_messages.each do |msg| %>
+<!--        <div><%#= msg %></div>-->
+      <%# end %>
  <div class="fields">
   <div class="field2">
 <!--    <%#= f.label :first_name %><br />-->
     <br />
     <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", placeholder: "First Name", :maxlength => 35 %>
-    <%# if @users.errors.include?(:first_name) %>
-<!--      <div class="invalid-feedback d-block">-->
-          <%# @users.errors.full_messages_for(:first_name).each do |error_message| %>
-<!--          <%#= error_message %>.-->
-          <%# end %>
-<!--      </div>-->
-    <%# end %>
   </div>
   <div class="field2">
 <!--    <%#= f.label :last_name %><br />-->

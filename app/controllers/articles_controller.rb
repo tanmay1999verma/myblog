@@ -34,6 +34,7 @@ class ArticlesController < ApplicationController
     if @article.update(article_params)
       redirect_to @article
     else
+      @article.errors.full_messages(:body, "cannot be blank")
       render :edit, status: :unprocessable_entity
     end
   end

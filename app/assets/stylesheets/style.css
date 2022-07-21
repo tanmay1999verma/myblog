@@ -906,6 +906,9 @@ h3{
     backdrop-filter: blur(4px);
     z-index: 10;
 }
+/*.alert.fade{*/
+/*    opacity: 0;*/
+/*}*/
 .title5{
     display: flex;
     margin-left: 60px;
