@@ -40,9 +40,9 @@
 <div class="form2">
   <h2 class="text6">Add User</h2>
 <%= form_with  url: '/user', method: :POST   do |f| %>
-    <%# @users.errors.full_messages.each do |msg| %>
-<!--        <div><%#= msg %></div>-->
-      <%# end %>
+    <% @users.errors.full_messages.each do |msg| %>
+        <div><%= msg %></div>
+      <% end %>
  <div class="fields">
   <div class="field2">
 <!--    <%#= f.label :first_name %><br />-->
@@ -63,7 +63,7 @@
   </div>
 
   <div class="field2">
-<!--    <%#= f.label :email %>-->
+    <%#= f.label :email %>
     <br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email" %>
   </div>
@@ -78,7 +78,7 @@
   </div>
 
   <div class="field2">
-<!--    <%#= f.label :password_confirmation %>-->
+    <%#= f.label :password_confirmation %>
     <br />
     <%= f.password_field :password_confirmation, autocomplete: "password_confirmation", placeholder: "Confirm Password" %>
   </div>

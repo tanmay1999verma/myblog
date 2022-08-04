@@ -6,11 +6,14 @@
   <hr>
   <div class="box1">
     <h2 style="color: white">Log in</h2>
-
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
+      <%#= form_for(resource, as: resource_name, url: "/users/sign_in"    ) do |f| %>
+<%#= form_with url:  user_session_path, method: :GET   do |f| %>
+      <%= devise_error_messages! %>
       <div class="field">
         <%= f.label :email %><br />
+        <%#= f.email_field :email, autofocus: true, placeholder: "email" %>
         <%= f.email_field :email, autofocus: true, placeholder: "email" %>
       </div>
 

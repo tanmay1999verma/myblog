@@ -3,4 +3,3 @@ class AddUserToArticles < ActiveRecord::Migration[7.0]
     add_reference :articles, :user, index: true
   end
 end
-1

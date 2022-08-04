@@ -1,0 +1,58 @@
+<div class="header">
+  <div class="logo">
+    <a href="http://localhost:3000/"> <%= image_tag("maze_logo.svg") %> <h1>Maze</h1></a>
+  </div>
+  <h1 class="usermanagement">User Management</h1>
+  <div class="profile1">
+    <%= image_tag("Rectangle 14.png") %>
+  </div>
+  <div class="name1">
+    <%= current_user.first_name %>
+    <%= current_user.last_name %>
+    <div class="role">
+     <%= current_user.roles.pluck("name")[0] %>
+    </div>
+  </div>
+</div>
+<div class="managementbody">
+  <div class="sidebar">
+    <div class="icon1">
+      <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
+      <a href="http://localhost:3000/">Feed</a>
+    </div>
+    <div class="icon2">
+      <%= image_tag("Vector (11).png") %>
+      <%= link_to "Profile", user_profile_path %>
+    </div>
+    <div class="icon3">
+      <%= image_tag("1034785-200.png") %>
+      <%= link_to "Manage User", user_index_path %>
+    </div>
+    <div class="icon4">
+      <%= image_tag("download (1).png") %>
+      <%= link_to "Report", user_reports_path %>
+    </div>
+    <div class="icon5">
+      <%= image_tag("Vector (12).png") %>
+      <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
+    </div>
+  </div>
+  <div class="body7">
+    <div class="box6">
+      <p> Upload File</p>
+      <div class="box7">
+        <div>
+          <%#= image_tag("Vector (21).png") %>
+          <%= form_tag import_users_path ,multipart: true do%>
+            <div class="box8">
+            <%= file_field_tag :file %>
+            </div>
+            <div class="box9">
+            <%= submit_tag " Upload File" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

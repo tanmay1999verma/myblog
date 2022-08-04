@@ -20,8 +20,8 @@
     </div>
   </div>
 </div>
-<% if current_user.has_role? :admin %>
   <div class="bbody">
+    <% if current_user.has_role? :admin %>
     <div class="sidebar">
       <div class="icon1">
         <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
@@ -44,36 +44,47 @@
         <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
       </div>
     </div>
-    <div class="body6">
-      <%= current_user.first_name %>
-      <%= current_user.last_name %>
-      <%= current_user.phone_number %>
-      <%= current_user.email %>
-      <%= current_user.roles.pluck("name")[0] %>
-    </div>
-  </div>
-<% else %>
-<div class="bbody">
-    <div class="sidebar">
-        <div class="icons">
+      <%else %>
+          <div class="sidebar">
+        <div class="icon1">
           <a href="http://localhost:3000/"> <%= image_tag("images.png") %></a>
           <a href="http://localhost:3000/">Feed</a>
         </div>
-        <div class="icons">
+        <div class="icon2">
           <%= image_tag("Vector (11).png") %>
           <%= link_to "Profile", user_profile_path %>
         </div>
-        <div class="icons">
+        <div class="icon5">
           <%= image_tag("Vector (12).png") %>
           <%= link_to "Sign Out", destroy_user_session_path, 'data-turbo-method': :delete%>
         </div>
       </div>
-  <div class="body6">
-      <%= current_user.first_name %>
-      <%= current_user.last_name %>
-      <%= current_user.phone_number %>
-      <%= current_user.email %>
-      <%= current_user.roles.pluck("name")[0] %>
+<%end %>
+    <div class="body6">
+      <div class="image2">
+      <%= image_tag("Rectangle 14.png") %>
+        <%#=link_to "Edit" , edit_user_registration_path %>
+        </div>
+      <div class="field3">
+        <h6>Role</h6>
+      <p><%= current_user.roles.pluck("name")[0] %></p>
+      </div>
+      <div class="field3">
+        <h6>First Name</h6>
+      <p><%= current_user.first_name %></p>
+      </div>
+      <div class="field3">
+        <h6>Last Name</h6>
+        <p><%= current_user.last_name %></p>
+      </div>
+      <div class="field3">
+        <h6>Phone Number</h6>
+       <p> <%= current_user.phone_number %></p>
+      </div>
+      <div class="field3">
+        <h6>Email</h6>
+        <p><%= current_user.email %></p>
+      </div>
     </div>
-</div>
-  <% end %>
+  </div>
+

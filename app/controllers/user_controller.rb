@@ -1,5 +1,6 @@
 class UserController < ApplicationController
   before_action :authenticate_user!
+  # include ImportFileJob
    def index
      @users = User.all
    end
@@ -9,16 +10,16 @@ class UserController < ApplicationController
    end
 
    def create
-       @users= User.new(user_params)
-       @users.add_role params[:roles]
+     @users= User.new(user_params)
+     @users.add_role params[:roles]
      @users.save
-       if @users.save!
-         UserNotifierMailer.send_signup_email.deliver_now
-         redirect_to user_index_path
-         flash[:alert] = "This User was saved successfully"
-       else
-         @users.errors.full_messages
-       end
+     if @users.save!
+       # UserNotifierMailer.send_signup_email.deliver_now
+       redirect_to user_index_path
+       flash[:alert] = "This User was saved successfully"
+     else
+       @users.errors.full_messages
+     end
    end
 
   def deactivate
@@ -51,42 +52,44 @@ class UserController < ApplicationController
      end
   end
 
-  def import
-    @users = User.all
-    if params[:file].present?
-      Sample.import(params[:file], params[:user_id])
-      redirect_to root_url, notice: "Users Imported"
+  def profile
+    @users=current_user
+  end
+
+  def edit
+    @users=User.find(params[:id])
+  end
+
+   def update
+    @users = User.find(params[:id])
+
+    if @users.update(user_params)
+      redirect_to @users
     else
-      redirect_to root_url, notice: "You need to choose a file first!"
+      render :edit, status: :unprocessable_entity
     end
   end
 
-  def profile
+   def import_users
+     # User.import(params[:file])
+     ImportFileJob.perform_now(params[:file])
+     redirect_to user_index_path
+   end
 
-  end
+   # def import_users
+   #  skip = true
+   #
+   #  CSV.foreach(params[:file].path, headers: false) do |row|
+   #    unless skip
+   #      accessible_attributes = %w[first_name last_name phone_number email password]
+   #      hash = Hash[accessible_attributes.zip(row)]
+   #      ImportFileJob.perform_now(hash)
+   #    end
+   #    skip = false
+   #  end
+   #  redirect_to user_index_path
+   # end
 
-  # def valid_password?(password)
-  #   if self.legacy_password?
-  #     Use Devise's secure_compare to avoid timing attacks
-      # if Devise.secure_compare(self.encrypted_password, User.legacy_password(password))
-      #
-      #   self.password = password
-      #   self.password_confirmation = password
-      #   self.legacy_password = false
-      #   self.save!
-      #
-      # else
-      #   return false
-      # end
-    # end
-    #
-    # super(password)
-  # end
-  #
-  # Put your legacy password hashing method here
-  # def self.legacy_password(password)
-  #   return Digest::MD5.hexdigest("#{password}-salty-herring");
-  # enda
 
    private
    def user_params
